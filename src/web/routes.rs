@@ -17,7 +17,10 @@ pub fn create_router(state: Arc<AppState>) -> Router {
         .route("/", get(handlers::index))
         .route("/health", get(handlers::health))
         // Auth routes
-        .route("/auth/login", get(handlers::auth::login))
+        .route(
+            "/auth/login",
+            get(handlers::auth::login).post(handlers::auth::login_submit),
+        )
         .route("/auth/callback", get(handlers::auth::callback))
         .route("/auth/logout", post(handlers::auth::logout))
         // Dashboard routes
