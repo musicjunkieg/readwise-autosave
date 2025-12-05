@@ -5,5 +5,20 @@
       "Bash(git *)",
       "Bash(gh *)"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd $CLAUDE_PROJECT_DIR && cargo fmt",
+            "timeout": 60,
+            "description": "Run cargo fmt after file edits"
+          }
+        ]
+      }
+    ]
   }
 }
