@@ -7,20 +7,21 @@ license = "MIT"
 
 [dependencies]
 # AT Protocol (Nick Gerakines' crates)
-atproto-client = "0.10"
-atproto-oauth = "0.10"
-atproto-oauth-axum = "0.10"
-atproto-identity = "0.1"
-atproto-record = "0.10"
-atproto-xrpcs = "0.10"
+atproto-client = "0.13"
+atproto-oauth = "0.13"
+atproto-oauth-axum = "0.13"
+atproto-identity = "0.13"
+atproto-record = "0.13"
+atproto-xrpcs = "0.13"
 
 # Async Runtime
 tokio = { version = "1", features = ["full"] }
 
 # Web Framework
-axum = "0.7"
+axum = "0.8"
 tower = "0.5"
 tower-http = { version = "0.6", features = ["cors", "trace"] }
+tower-sessions = { version = "0.14", features = ["memory-store"] }
 
 # HTTP Client
 reqwest = { version = "0.12", features = ["json"] }
@@ -48,6 +49,8 @@ dotenvy = "0.15"
 async-trait = "0.1"
 
 # Utilities
+base64 = "0.22"
+rand = "0.9"
 url = "2"
 urlencoding = "2"
 regex = "1"
