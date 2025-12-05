@@ -13,9 +13,21 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd $CLAUDE_PROJECT_DIR && cargo fmt",
-            "timeout": 60,
-            "description": "Run cargo fmt after file edits"
+            "command": "cd $CLAUDE_PROJECT_DIR && cargo fmt 2>/dev/null; git add -A && git diff --cached --quiet || git commit -m 'Auto-commit: file changes'",
+            "timeout": 120,
+            "description": "Run cargo fmt and auto-commit after file edits"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd $CLAUDE_PROJECT_DIR && branch=$(git branch --show-current) && if [ \"$branch\" = \"main\" ]; then echo '⚠️  WARNING: You are on the main branch. If working on a GitHub issue, create a branch first: git checkout -b issue-{number}-{description}'; fi",
+            "timeout": 10,
+            "description": "Warn if on main branch when starting work"
           }
         ]
       }

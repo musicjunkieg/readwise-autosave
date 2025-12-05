@@ -66,10 +66,7 @@ impl HttpBlueskyClient {
     }
 
     /// Make an authenticated GET request
-    async fn auth_get<T: for<'de> Deserialize<'de>>(
-        &self,
-        url: &str,
-    ) -> Result<T> {
+    async fn auth_get<T: for<'de> Deserialize<'de>>(&self, url: &str) -> Result<T> {
         let token = self
             .access_token
             .as_ref()
@@ -213,10 +210,8 @@ mod tests {
 
     #[test]
     fn test_client_with_auth() {
-        let client = HttpBlueskyClient::with_auth(
-            "test_token".to_string(),
-            "did:plc:test".to_string(),
-        );
+        let client =
+            HttpBlueskyClient::with_auth("test_token".to_string(), "did:plc:test".to_string());
         assert_eq!(client.access_token.as_deref(), Some("test_token"));
         assert_eq!(client.did.as_deref(), Some("did:plc:test"));
     }

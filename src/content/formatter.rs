@@ -123,7 +123,7 @@ fn format_posts_as_html(posts: &[&ThreadViewPost]) -> String {
 
 /// Extract rkey from AT-URI (at://did/collection/rkey)
 fn extract_rkey(uri: &str) -> String {
-    uri.split('/').last().unwrap_or("").to_string()
+    uri.split('/').next_back().unwrap_or("").to_string()
 }
 
 /// Basic HTML escaping

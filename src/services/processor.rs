@@ -6,26 +6,17 @@ use anyhow::Result;
 use tracing::{debug, info, instrument, warn};
 
 use crate::bluesky::{BlueskyClient, PostView, ThreadViewPost};
-use crate::content::{format_post_as_highlight, format_thread_as_document, is_thread};
 use crate::content::links::extract_links;
+use crate::content::{format_post_as_highlight, format_thread_as_document, is_thread};
 use crate::readwise::client::{Document, ReadwiseClient};
 
 /// Options for processing a post
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct ProcessOptions {
     /// Extract and save links found in the post
     pub extract_links: bool,
     /// Optional note to attach to the highlight
     pub note: Option<String>,
-}
-
-impl Default for ProcessOptions {
-    fn default() -> Self {
-        Self {
-            extract_links: false,
-            note: None,
-        }
-    }
 }
 
 /// Post processor handles fetching posts and saving to Readwise
@@ -92,7 +83,9 @@ impl<B: BlueskyClient, R: ReadwiseClient> PostProcessor<B, R> {
         note: Option<&str>,
     ) -> Result<()> {
         let highlight = format_post_as_highlight(post, note);
-        self.readwise.save_highlight(readwise_token, highlight).await?;
+        self.readwise
+            .save_highlight(readwise_token, highlight)
+            .await?;
         info!("Saved post as highlight");
         Ok(())
     }
@@ -100,7 +93,9 @@ impl<B: BlueskyClient, R: ReadwiseClient> PostProcessor<B, R> {
     /// Save a thread as a Readwise Reader document
     async fn save_thread(&self, thread: &ThreadViewPost, readwise_token: &str) -> Result<()> {
         let document = format_thread_as_document(thread);
-        self.readwise.save_document(readwise_token, document).await?;
+        self.readwise
+            .save_document(readwise_token, document)
+            .await?;
         info!("Saved thread to Reader");
         Ok(())
     }

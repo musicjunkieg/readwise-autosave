@@ -8,10 +8,7 @@ pub fn extract_links(record: &PostRecord) -> Vec<String> {
         return Vec::new();
     };
 
-    facets
-        .iter()
-        .flat_map(|facet| extract_links_from_facet(facet))
-        .collect()
+    facets.iter().flat_map(extract_links_from_facet).collect()
 }
 
 fn extract_links_from_facet(facet: &Facet) -> Vec<String> {

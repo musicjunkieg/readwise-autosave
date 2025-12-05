@@ -1,3 +1,8 @@
+// Allow unused code during scaffolding phase
+#![allow(dead_code)]
+#![allow(unused_imports)]
+#![allow(unused_variables)]
+
 use anyhow::Result;
 use std::sync::Arc;
 use tokio::net::TcpListener;

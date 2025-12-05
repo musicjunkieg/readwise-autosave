@@ -165,8 +165,7 @@ impl<B: BlueskyClient + Clone, R: ReadwiseClient + Clone> DmBotService<B, R> {
         }
 
         // Try to extract a Bluesky post URL
-        let url_pattern =
-            Regex::new(r"https://bsky\.app/profile/[^/]+/post/[a-zA-Z0-9]+").unwrap();
+        let url_pattern = Regex::new(r"https://bsky\.app/profile/[^/]+/post/[a-zA-Z0-9]+").unwrap();
 
         if let Some(url_match) = url_pattern.find(text) {
             let post_url = url_match.as_str().to_string();
@@ -176,10 +175,7 @@ impl<B: BlueskyClient + Clone, R: ReadwiseClient + Clone> DmBotService<B, R> {
 
             // Extract note (text after URL, excluding flags)
             let after_url = text[url_match.end()..].trim();
-            let note = after_url
-                .replace("+links", "")
-                .trim()
-                .to_string();
+            let note = after_url.replace("+links", "").trim().to_string();
             let note = if note.is_empty() { None } else { Some(note) };
 
             return DmCommand::SavePost {
@@ -245,7 +241,10 @@ mod tests {
                 note,
                 extract_links,
             } => {
-                assert_eq!(post_url, "https://bsky.app/profile/test.bsky.social/post/abc123");
+                assert_eq!(
+                    post_url,
+                    "https://bsky.app/profile/test.bsky.social/post/abc123"
+                );
                 assert!(note.is_none());
                 assert!(!extract_links);
             }

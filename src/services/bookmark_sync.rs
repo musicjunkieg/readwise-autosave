@@ -72,11 +72,7 @@ impl<B: BlueskyClient + Clone, R: ReadwiseClient + Clone> BookmarkSyncService<B,
     }
 
     /// Poll bookmarks and process new ones
-    async fn poll_bookmarks(
-        &self,
-        bluesky: &B,
-        settings: &UserSettings,
-    ) -> Result<usize> {
+    async fn poll_bookmarks(&self, bluesky: &B, settings: &UserSettings) -> Result<usize> {
         // Get bookmarks starting from the last cursor
         let cursor = settings.last_bookmark_cursor.as_deref();
         let response = bluesky.get_bookmarks(cursor).await?;
